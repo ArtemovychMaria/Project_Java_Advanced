@@ -3,8 +3,8 @@ package Project_Java_Advanced.services;
 import Project_Java_Advanced.daos.UserDao;
 import Project_Java_Advanced.entities.User;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
 
@@ -28,6 +28,9 @@ public class UserService {
 
     public User selectByID(int id){
         return userDao.selectById(id);
+    }
+    public Optional<User> selectByEmail(String email){
+        return userDao.selectByEmail(email);
     }
 
     public List<User> selectAll(){
