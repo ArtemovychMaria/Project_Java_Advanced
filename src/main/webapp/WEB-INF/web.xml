@@ -1,0 +1,23 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+  <display-name>Archetype Created Web Application</display-name>
+
+<!--  <servlet>-->
+<!--    <servlet-name>EntranceServlet</servlet-name>-->
+<!--    <servlet-class>Project_Java_Advanced.servlets.EntranceServlet</servlet-class>-->
+<!--  </servlet>-->
+
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>EntranceServlet</servlet-name>-->
+<!--    <url-pattern>/entrance</url-pattern>-->
+<!--  </servlet-mapping>-->
+
+  <context-param>
+    <param-name>log4j-config</param-name>
+    <param-value>WEB-INF/loggerConfig.xml</param-value>
+  </context-param>
+
+</web-app>
