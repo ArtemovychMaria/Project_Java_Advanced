@@ -81,8 +81,8 @@ public class UserDao implements CRUD <User> {
     @Override
     public User insert(User user) {
 
-        String msg=String.format("Will be inserted new user with email=%s,firstName=%s,surname=%s,role=%s and " +
-                "password=%s",user.getEmail(),user.getFirstName(),user.getSurname(),user.getRole(),user.getPassword());
+        String msg=String.format("Will be inserted new user with email=%s,firstName=%s,surname=%s and " +
+                "password=%s",user.getEmail(),user.getFirstName(),user.getSurname(),user.getPassword());
         log.debug(msg);
 
         PreparedStatement preparedStatement = null;
@@ -103,13 +103,17 @@ public class UserDao implements CRUD <User> {
 
         return user;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error inserting");
+            String message=String.format("Error inserting user with email=%s,firstName=%s,surname=%s and" +
+                    "password=%s",user.getEmail(),user.getFirstName(),user.getSurname(),user.getPassword());
+            log.error(message,e);
         }
+        return null;
     }
 
     @Override
     public void update(User user) {
+        String msg=String.format("Will be updated used with id=%d",user.getId());
+        log.info(msg);
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setObject(1,user.getEmail());
@@ -129,6 +133,8 @@ public class UserDao implements CRUD <User> {
 
     @Override
     public void delete(int id){
+        String msg=String.format("Will be deleted used with id=%d",id);
+        log.info(msg);
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(delete);
             preparedStatement.setObject(1,id);

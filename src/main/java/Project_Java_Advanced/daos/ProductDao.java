@@ -110,7 +110,7 @@ public class ProductDao implements CRUD<Product> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             String msg=String.format("Error deleting product from database with id=%d",id);
-            log.error(msg);
+            log.error(msg,e);
         }
     }
 }
