@@ -6,10 +6,12 @@ import Project_Java_Advanced.entities.Product;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 public class ProductDao implements CRUD<Product> {
 
     private Connection connection;
+    private Logger log=Logger.getLogger(ProductDao.class);
     public static final String select_products="select * from products";
     public static final String select_by_id="select * from products where id=?";
     public static final String insert="insert into products(product_name,product_description,price) values(?,?,?)";
@@ -17,8 +19,9 @@ public class ProductDao implements CRUD<Product> {
     public static final String update="update products set product_name=?,product_description=?,price=? where id=?";
 
     public ProductDao() {
-        this.connection = ConnectionUtil.getConnection();;
+        this.connection = ConnectionUtil.getConnection();
     }
+
 
     @Override
     public Product selectById(int id) {
@@ -55,6 +58,10 @@ public class ProductDao implements CRUD<Product> {
 
     @Override
     public Product insert(Product product) {
+
+        String msg=String.format("Will be inserted product with name=%s,description=%s and " +
+                "price=%f",product.getName(),product.getDescription(),product.getPrice());
+        log.debug(msg);
 
         PreparedStatement preparedStatement = null;
         try {
@@ -102,8 +109,8 @@ public class ProductDao implements CRUD<Product> {
             preparedStatement.setObject(1,id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error deleting from database");
+            String msg=String.format("Error deleting product from database with id=%d",id);
+            log.error(msg,e);
         }
     }
 }

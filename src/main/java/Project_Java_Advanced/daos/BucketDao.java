@@ -6,9 +6,11 @@ import Project_Java_Advanced.services.ConnectionUtil;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 public class BucketDao implements CRUD <Bucket>{
     private Connection connection;
+    private Logger log=Logger.getLogger(BucketDao.class);
     public static final String select_buckets="select * from buckets";
     public static final String select_by_id="select * from buckets where id=?";
     public static final String insert="insert into buckets(user_id,product_id,purchase_date) values(?,?,?)";
@@ -56,6 +58,10 @@ public class BucketDao implements CRUD <Bucket>{
     @Override
     public Bucket insert(Bucket bucket) {
 
+        String msg=String.format("Will be inserted bucket with " +
+                "userId=%d and productId=%d",bucket.getUserId(),bucket.getProductId());
+        log.debug(msg);
+
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
@@ -79,6 +85,8 @@ public class BucketDao implements CRUD <Bucket>{
 
     @Override
     public void update(Bucket bucket) {
+        String msg=String.format("Will be updated bucket with id=%d",bucket.getId());
+        log.debug(msg);
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setObject(1,bucket.getUserId());

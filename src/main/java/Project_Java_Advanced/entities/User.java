@@ -10,13 +10,23 @@ public class User {
     String firstName;
     String surname;
     String role;
+    String password;
 
-    public User(int id, String email, String firstName, String surname, String role) {
+    public User(String email, String firstName, String surname, String role, String password) {
+        this.email = email;
+        this.firstName = firstName;
+        this.surname = surname;
+        this.role = role;
+        this.password = password;
+    }
+
+    public User(int id, String email, String firstName, String surname, String role, String password) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.surname = surname;
         this.role = role;
+        this.password = password;
     }
 
     public int getId() {
@@ -59,13 +69,22 @@ public class User {
         this.role = role;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public static User of(ResultSet resultSet) throws SQLException {
         int id=resultSet.getInt("id");
         String email=resultSet.getString("user_email");
         String firstName=resultSet.getString("user_name");
         String surname=resultSet.getString("user_surname");
         String role=resultSet.getString("user_role");
-        return new User(id,email,firstName,surname,role);
+        String password=resultSet.getString("user_password");
+        return new User(id,email,firstName,surname,role,password);
     }
 
     @Override
