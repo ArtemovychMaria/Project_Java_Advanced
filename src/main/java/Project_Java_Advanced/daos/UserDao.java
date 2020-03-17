@@ -84,7 +84,7 @@ public class UserDao implements CRUD <User> {
         String msg=String.format("Will be inserted new user with email=%s,firstName=%s,surname=%s and " +
                 "password=%s",user.getEmail(),user.getFirstName(),user.getSurname(),user.getPassword());
         log.debug(msg);
-
+        log.info(msg);
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);

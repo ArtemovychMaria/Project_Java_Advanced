@@ -5,8 +5,10 @@ import org.apache.log4j.xml.DOMConfigurator;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 import java.io.File;
 
+@WebListener("application context listener to init log4j")
 public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
