@@ -1,0 +1,2 @@
+2020-03-17 21:05:57 DEBUG UserDao:86 -Will be inserted new user with email=humenna@mail,firstName=halyna,surname=humenna and password=humen76
+2020-03-17 21:05:57 INFO  UserDao:87 -Will be inserted new user with email=humenna@mail,firstName=halyna,surname=humenna and password=humen76
