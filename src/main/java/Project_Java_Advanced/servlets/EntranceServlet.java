@@ -15,40 +15,31 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 
-@WebServlet("/entrance")
+@WebServlet("/login")
 public class EntranceServlet extends HttpServlet {
+
 
     private UserService userService;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        userService = UserService.getUserService();
 
-        if (req.getParameter("Registration") != null){
-            req.getRequestDispatcher("registration.jsp").forward(req, resp);
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+
+        if (!ObjectUtils.allNotNull(email, password)) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return;
         }
 
-        if (req.getParameter("logIn") != null){
+        Optional<User> user = userService.selectByEmail(email);
 
-            userService=UserService.getUserService();
-
-            String email=req.getParameter("login");
-            String password=req.getParameter("password");
-
-            if (!ObjectUtils.allNotNull(email, password)) {
-                req.getRequestDispatcher("index.jsp").forward(req, resp);
-                return;
-            }
-
-            Optional<User> user = userService.selectByEmail(email);
-
-            if (user.isPresent() && user.get().getPassword().equals(password)) {
-                req.setAttribute("userIdentyficator", user.get().getFirstName());
-                req.getRequestDispatcher("cabinet.jsp").forward(req, resp);
-                return;
-            }
-
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+        if (user.isPresent() && user.get().getPassword().equals(password)) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+            return;
         }
+        resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
     }
 }
