@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 @WebServlet("/register")
 public class RegistrationServlet extends HttpServlet {
+
     private UserService userService=UserService.getUserService();
 
     @Override
@@ -28,12 +29,13 @@ public class RegistrationServlet extends HttpServlet {
 
         if (ObjectUtils.allNotNull(firstName, lastName, email, password)) {
             userService.insert(new User(email, firstName, lastName, UserRoles.USER.toString(), password));
-            request.setAttribute("userIdentyficator", email);
-            request.getRequestDispatcher("cabinet.jsp").forward(request, response);
+            response.setStatus(HttpServletResponse.SC_CREATED);
             return;
         }
 
-        request.getRequestDispatcher("registration.jsp").forward(request,response);
+
+        response.setContentType("text/plain");
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
     }
 
 }
