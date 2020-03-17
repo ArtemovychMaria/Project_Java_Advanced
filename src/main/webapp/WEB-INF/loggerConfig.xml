@@ -13,9 +13,9 @@
     </appender>
 
     <appender name="fileAppender" class="org.apache.log4j.FileAppender">
-        <param name="file" value="server.error.log"/>
+        <param name="file" value="D:\Project_Java_Advanced\logs\server.log"/>
         <filter class = "org.apache.log4j.varia.LevelRangeFilter">
-            <param name = "LevelMin" value = "ERROR"/>
+            <param name = "LevelMin" value = "TRACE"/>
             <param name = "LevelMax" value = "ERROR"/>
         </filter>
         <layout class="org.apache.log4j.PatternLayout">
