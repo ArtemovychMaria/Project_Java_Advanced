@@ -16,7 +16,7 @@ public class BucketService {
         this.bucketDao=new BucketDao();
     }
 
-    public BucketService getUserService(){
+    public BucketService getBucketService(){
         if(bucketService==null){
             bucketService=new BucketService();
         }
