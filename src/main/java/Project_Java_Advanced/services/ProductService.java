@@ -10,15 +10,15 @@ import java.util.List;
 public class ProductService {
 
     private ProductDao productDao;
-    private ProductService productService;
+    private static ProductService productService;
 
     private ProductService(){
 
         this.productDao=new ProductDao();
     }
 
-    public ProductService getUserService(){
-        if(productService==null){
+    public static ProductService getProductService(){
+        if(productService==null) {
             productService=new ProductService();
         }
         return productService;

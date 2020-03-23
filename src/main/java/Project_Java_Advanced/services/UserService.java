@@ -33,6 +33,10 @@ public class UserService {
         return userDao.selectByEmail(email);
     }
 
+    public Optional<User> selectByEmailAndPassword(String email, String password) {
+        return userDao.selectByEmail(email).filter(user -> user.getPassword().equals(password));
+    }
+
     public List<User> selectAll(){
         return userDao.selectAll();
     }

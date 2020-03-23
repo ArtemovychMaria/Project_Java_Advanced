@@ -16,26 +16,34 @@
 
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
 
-<div class="login-page">
-    <div class="form">
-        <form class="register-form">
-            <input class="firstName" type="text" placeholder="first name"/>
-            <input class="lastName" type="text" placeholder="Last name"/>
-            <input class="email" type="email" placeholder="email"/>
-            <input class="registerPass" type="password" placeholder="password"/>
-
-            <button class="register">create</button>
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
-        </form>
-        <form class="login-form">
-            <input class="logEmail" type="text" placeholder="email"/>
-            <input class="loginPass" type="password" placeholder="password"/>
-            <button class="login">login</button>
-            <p class="message">Not registered? <a href="#">Create an account</a></p>
-        </form>
+<div class="login">
+  <h1>SIGN IN</h1>
+  <form class="loginForm">
+    <label for="email">Email:</label>
+    <input class="userEmail" name="username" type="text">
+    <label for="password">Password:</label>
+    <input class="loginPassword" name="password" type="password">
+    <div class="buttons">
+     <button class="login">login</button>
+     <p class="message">Not registered? <a href="#">Create an account</a></p>
     </div>
+  </form>
+</div>
+
+ <div class="register">
+  <h1>REGISTER</h1>
+  <form class="registerForm">
+    <label for="firstName">First name:</label>
+    <input class="userName" type="text">
+     <label for="lastName">Last name:</label>
+     <input class="userSurname" type="text">
+    <label for="email">Email:</label>
+    <input class="registerEmail" type="email">
+    <label for="password">Password:</label>
+    <input class="registerPassword" type="password">
+      <button class="register">create</button>
+  </form>
 </div>
 
 
