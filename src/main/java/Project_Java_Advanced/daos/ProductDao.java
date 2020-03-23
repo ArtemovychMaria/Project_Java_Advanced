@@ -1,6 +1,6 @@
 package Project_Java_Advanced.daos;
 
-import Project_Java_Advanced.services.ConnectionUtil;
+import Project_Java_Advanced.utils.ConnectionUtil;
 import Project_Java_Advanced.entities.Product;
 
 import java.sql.*;
@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 public class ProductDao implements CRUD<Product> {
 
     private Connection connection;
-    private Logger log=Logger.getLogger(ProductDao.class);
+    private static final Logger log=Logger.getLogger(ProductDao.class);
     public static final String select_products="select * from products";
     public static final String select_by_id="select * from products where id=?";
     public static final String insert="insert into products(product_name,product_description,price) values(?,?,?)";
@@ -39,9 +39,8 @@ public class ProductDao implements CRUD<Product> {
 
     @Override
     public List<Product> selectAll() {
-        Statement statement = null;
         try {
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(select_products);
 
         List<Product> products= new ArrayList<>();
@@ -63,16 +62,14 @@ public class ProductDao implements CRUD<Product> {
                 "price=%f",product.getName(),product.getDescription(),product.getPrice());
         log.debug(msg);
 
-        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setObject(1,product.getName());
         preparedStatement.setObject(2,product.getDescription());
         preparedStatement.setObject(3,product.getPrice());
 
         preparedStatement.executeUpdate();
-        ResultSet generatedKeys = null;
-            generatedKeys = preparedStatement.getGeneratedKeys();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
         generatedKeys.next();
 
