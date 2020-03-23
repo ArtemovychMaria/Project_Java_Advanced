@@ -1,4 +1,4 @@
-package Project_Java_Advanced.services;
+package Project_Java_Advanced.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
