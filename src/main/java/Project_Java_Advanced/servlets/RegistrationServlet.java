@@ -28,7 +28,7 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         if (ObjectUtils.allNotNull(firstName, lastName, email, password)) {
-            userService.insert(new User(email, firstName, lastName, UserRoles.USER.toString(), password));
+            userService.insert(email,firstName,lastName,password);
             response.setStatus(HttpServletResponse.SC_CREATED);
             return;
         }

@@ -12,22 +12,63 @@ public class User {
     String role;
     String password;
 
-    public User(String email, String firstName, String surname, String role, String password) {
-        this.email = email;
-        this.firstName = firstName;
-        this.surname = surname;
-        this.role = role;
-        this.password = password;
+    public User() {
     }
 
-    public User(int id, String email, String firstName, String surname, String role, String password) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.surname = surname;
-        this.role = role;
-        this.password = password;
+    public static Builder builder() {
+        return new Builder();
     }
+
+    public static class Builder {
+        int id;
+        String email;
+        String firstName;
+        String surname;
+        String role;
+        String password;
+
+
+    public Builder setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public Builder setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public Builder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder setSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        public Builder setRole(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+    public User build() {
+        User user=new User();
+        user.setId(id);
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setSurname(surname);
+        user.setRole(role);
+        user.setPassword(password);
+        return user;
+    }
+}
 
     public int getId() {
         return id;
@@ -66,7 +107,11 @@ public class User {
     }
 
     public void setRole(String role) {
-        this.role = role;
+        if(role==null){
+            this.role=UserRoles.USER.name();
+        }else{
+            this.role = role;
+        }
     }
 
     public String getPassword() {
@@ -84,7 +129,14 @@ public class User {
         String surname=resultSet.getString("user_surname");
         String role=resultSet.getString("user_role");
         String password=resultSet.getString("user_password");
-        return new User(id,email,firstName,surname,role,password);
+        return User.builder()
+                .setId(id)
+                .setEmail(email)
+                .setFirstName(firstName)
+                .setSurname(surname)
+                .setRole(role)
+                .setPassword(password)
+                .build();
     }
 
     @Override

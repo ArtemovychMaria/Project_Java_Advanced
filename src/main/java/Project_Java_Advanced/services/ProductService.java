@@ -24,11 +24,15 @@ public class ProductService {
         return productService;
     }
 
-    public Product insert(Product product){
-        return productDao.insert(product);
+    public Product insert(String name,String description,String price){
+        return productDao.insert(Product.builder()
+        .setName(name)
+        .setDescription(description)
+        .setPrice(Double.parseDouble(price))
+        .build());
     }
 
-    public Product selectByID(int id){
+    public Product getByID(int id){
         return productDao.selectById(id);
     }
 
