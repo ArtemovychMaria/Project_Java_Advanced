@@ -34,8 +34,7 @@ public class ProductServlet extends HttpServlet {
 
             return;
         }
-        Product product = new Product(name, description, Double.parseDouble(price));
-        productService.insert(product);
+        productService.insert(name,description,price);
 
         response.setStatus(HttpServletResponse.SC_OK);
     }

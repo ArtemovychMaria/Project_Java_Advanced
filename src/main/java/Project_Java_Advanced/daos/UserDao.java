@@ -1,6 +1,6 @@
 package Project_Java_Advanced.daos;
 
-import Project_Java_Advanced.services.ConnectionUtil;
+import Project_Java_Advanced.utils.ConnectionUtil;
 import Project_Java_Advanced.entities.User;
 
 import java.sql.*;
@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 public class UserDao implements CRUD <User> {
 
     private Connection connection;
-    private Logger log=Logger.getLogger(UserDao.class);
+    private static final Logger log=Logger.getLogger(UserDao.class);
     public static final String select_users="select * from users";
     public static final String select_by_id="select * from users where id=?";
     public static final String select_by_email="select * from users where user_email=?";
@@ -54,16 +54,9 @@ public class UserDao implements CRUD <User> {
 
     @Override
     public List<User> selectAll(){
-        Statement statement = null;
         try {
-            statement = connection.createStatement();
-        ResultSet resultSet = null;
-        try {
-            resultSet = statement.executeQuery(select_users);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error selecting");
-        }
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(select_users);
 
         List<User> users= new ArrayList<>();
 
@@ -88,12 +81,7 @@ public class UserDao implements CRUD <User> {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setObject(1,user.getEmail());
-        preparedStatement.setObject(2,user.getFirstName());
-        preparedStatement.setObject(3,user.getSurname());
-        preparedStatement.setObject(4,user.getRole());
-        preparedStatement.setObject(5,user.getPassword());
-
+        fillStatementWithUpdateParameters(preparedStatement,user);
         preparedStatement.executeUpdate();
         ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
@@ -110,17 +98,26 @@ public class UserDao implements CRUD <User> {
         return null;
     }
 
+    private void fillStatementWithUpdateParameters(PreparedStatement preparedStatement,User user) {
+        try {
+        preparedStatement.setObject(1,user.getEmail());
+        preparedStatement.setObject(2,user.getFirstName());
+        preparedStatement.setObject(3,user.getSurname());
+        preparedStatement.setObject(4,user.getRole());
+        preparedStatement.setObject(5,user.getPassword());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException("Error");
+        }
+    }
+
     @Override
     public void update(User user) {
         String msg=String.format("Will be updated used with id=%d",user.getId());
         log.info(msg);
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(update);
-            preparedStatement.setObject(1,user.getEmail());
-            preparedStatement.setObject(2,user.getFirstName());
-            preparedStatement.setObject(3,user.getSurname());
-            preparedStatement.setObject(4,user.getRole());
-            preparedStatement.setObject(5,user.getPassword());
+            fillStatementWithUpdateParameters(preparedStatement,user);
             preparedStatement.setObject(6,user.getId());
 
             preparedStatement.executeUpdate();

@@ -1,7 +1,7 @@
 package Project_Java_Advanced.daos;
 
 import Project_Java_Advanced.entities.Bucket;
-import Project_Java_Advanced.services.ConnectionUtil;
+import Project_Java_Advanced.utils.ConnectionUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 public class BucketDao implements CRUD <Bucket>{
     private Connection connection;
-    private Logger log=Logger.getLogger(BucketDao.class);
+    private static final Logger log=Logger.getLogger(BucketDao.class);
     public static final String select_buckets="select * from buckets";
     public static final String select_by_id="select * from buckets where id=?";
     public static final String insert="insert into buckets(user_id,product_id,purchase_date) values(?,?,?)";
@@ -37,9 +37,8 @@ public class BucketDao implements CRUD <Bucket>{
 
     @Override
     public List<Bucket> selectAll() {
-        Statement statement = null;
         try {
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(select_buckets);
 
         List<Bucket> buckets= new ArrayList<>();
@@ -62,9 +61,8 @@ public class BucketDao implements CRUD <Bucket>{
                 "userId=%d and productId=%d",bucket.getUserId(),bucket.getProductId());
         log.debug(msg);
 
-        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setObject(1,bucket.getUserId());
         preparedStatement.setObject(2,bucket.getProductId());
         preparedStatement.setObject(3,bucket.getPurchaseDate());

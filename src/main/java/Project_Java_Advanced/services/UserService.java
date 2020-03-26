@@ -22,18 +22,23 @@ public class UserService {
         return userService;
     }
 
-    public User insert(User user){
-        return userDao.insert(user);
+    public User insert(String email,String firstName,String lastName,String pasword){
+        return userDao.insert(User.builder()
+        .setEmail(email)
+        .setFirstName(firstName)
+        .setSurname(lastName)
+        .setPassword(pasword)
+        .build());
     }
 
-    public User selectByID(int id){
+    public User getByID(int id){
         return userDao.selectById(id);
     }
-    public Optional<User> selectByEmail(String email){
+    public Optional<User> getByEmail(String email){
         return userDao.selectByEmail(email);
     }
 
-    public Optional<User> selectByEmailAndPassword(String email, String password) {
+    public Optional<User> getByEmailAndPassword(String email, String password) {
         return userDao.selectByEmail(email).filter(user -> user.getPassword().equals(password));
     }
 

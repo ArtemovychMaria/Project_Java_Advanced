@@ -27,7 +27,7 @@ public class BucketService {
         return bucketDao.insert(bucket);
     }
 
-    public Bucket selectByID(int id){
+    public Bucket getByID(int id){
         return bucketDao.selectById(id);
     }
 

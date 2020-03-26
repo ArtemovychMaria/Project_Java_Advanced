@@ -1,2 +1,86 @@
 2020-03-17 21:05:57 DEBUG UserDao:86 -Will be inserted new user with email=humenna@mail,firstName=halyna,surname=humenna and password=humen76
 2020-03-17 21:05:57 INFO  UserDao:87 -Will be inserted new user with email=humenna@mail,firstName=halyna,surname=humenna and password=humen76
+2020-03-22 17:37:21 DEBUG ProductDao:64 -Will be inserted product with name=Book,description=Ukraine book and price=145,000000
+2020-03-22 18:52:02 DEBUG UserDao:86 -Will be inserted new user with email=peterson@mail,firstName=Gerge,surname=Peterson and password=12456
+2020-03-22 18:52:02 INFO  UserDao:87 -Will be inserted new user with email=peterson@mail,firstName=Gerge,surname=Peterson and password=12456
+2020-03-23 13:46:18 DEBUG UserDao:79 -Will be inserted new user with email=kushtan@mail,firstName=Anna,surname=Kushtan and password=3476
+2020-03-23 13:46:18 INFO  UserDao:80 -Will be inserted new user with email=kushtan@mail,firstName=Anna,surname=Kushtan and password=3476
+2020-03-23 13:46:18 ERROR UserDao:100 -Error inserting user with email=kushtan@mail,firstName=Anna,surname=Kushtan andpassword=3476
+java.sql.SQLIntegrityConstraintViolationException: Column 'user_role' cannot be null
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1092)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1040)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1347)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1025)
+	at Project_Java_Advanced.daos.UserDao.insert(UserDao.java:89)
+	at Project_Java_Advanced.services.UserService.insert(UserService.java:26)
+	at Project_Java_Advanced.servlets.RegistrationServlet.doPost(RegistrationServlet.java:31)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:647)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:728)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:502)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:953)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1041)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:603)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:310)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2020-03-23 13:57:04 DEBUG UserDao:79 -Will be inserted new user with email=kutsko@mail,firstName=Artem,surname=Kutsko and password=3463
+2020-03-23 13:57:04 INFO  UserDao:80 -Will be inserted new user with email=kutsko@mail,firstName=Artem,surname=Kutsko and password=3463
+2020-03-23 13:57:04 ERROR UserDao:100 -Error inserting user with email=kutsko@mail,firstName=Artem,surname=Kutsko andpassword=3463
+java.sql.SQLIntegrityConstraintViolationException: Column 'user_role' cannot be null
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:117)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:953)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1092)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1040)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1347)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1025)
+	at Project_Java_Advanced.daos.UserDao.insert(UserDao.java:89)
+	at Project_Java_Advanced.services.UserService.insert(UserService.java:26)
+	at Project_Java_Advanced.servlets.RegistrationServlet.doPost(RegistrationServlet.java:31)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:647)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:728)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:502)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:171)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:100)
+	at org.apache.catalina.valves.AccessLogValve.invoke(AccessLogValve.java:953)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:408)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1041)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:603)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:310)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2020-03-23 14:20:45 DEBUG UserDao:79 -Will be inserted new user with email=bokalo@mail,firstName=Andriy,surname=Bokalo and password=5437
+2020-03-23 14:20:45 INFO  UserDao:80 -Will be inserted new user with email=bokalo@mail,firstName=Andriy,surname=Bokalo and password=5437
+2020-03-23 15:15:10 DEBUG UserDao:79 -Will be inserted new user with email=kotsur@mail,firstName=Tania,surname=Kotsur and password=4376
+2020-03-23 15:15:10 INFO  UserDao:80 -Will be inserted new user with email=kotsur@mail,firstName=Tania,surname=Kotsur and password=4376
+2020-03-23 16:53:01 DEBUG UserDao:79 -Will be inserted new user with email=lutsenko@mail,firstName=Anita,surname=Lutsenko and password=4563
+2020-03-23 16:53:01 INFO  UserDao:80 -Will be inserted new user with email=lutsenko@mail,firstName=Anita,surname=Lutsenko and password=4563
+2020-03-23 16:54:31 DEBUG ProductDao:63 -Will be inserted product with name=pillow,description=white and price=110,000000
+2020-03-23 16:57:32 DEBUG UserDao:79 -Will be inserted new user with email=cucherenko@mail,firstName=Yurii,surname=Cucherenko and password=3482
+2020-03-23 16:57:32 INFO  UserDao:80 -Will be inserted new user with email=cucherenko@mail,firstName=Yurii,surname=Cucherenko and password=3482

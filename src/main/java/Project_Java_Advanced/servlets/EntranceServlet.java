@@ -30,14 +30,14 @@ public class EntranceServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        if (!ObjectUtils.allNotNull(email, password)) {
+        if (!isParametersValid(email,password)) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        Optional<User> user = userService.selectByEmail(email);
+        Optional<User> user = userService.getByEmailAndPassword(email,password);
 
-        if (user.isPresent() && user.get().getPassword().equals(password)) {
+        if (user.isPresent()) {
             HttpSession session = req.getSession(true);
             session.setAttribute("userFirstName", user.get().getFirstName());
             resp.setStatus(HttpServletResponse.SC_OK);
@@ -46,7 +46,7 @@ public class EntranceServlet extends HttpServlet {
         resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
     }
 
-    private boolean isPramsValid(String email, String password) {
+    private boolean isParametersValid(String email, String password) {
         return ObjectUtils.allNotNull(email, password);
     }
 }
