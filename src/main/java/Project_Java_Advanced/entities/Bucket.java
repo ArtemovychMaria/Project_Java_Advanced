@@ -44,7 +44,7 @@ public class Bucket {
         public Bucket build() {
             Bucket bucket=new Bucket();
             bucket.setId(id);
-            bucket.setUserId(id);
+            bucket.setUserId(userId);
             bucket.setProductId(productId);
             bucket.setPurchaseDate(purchaseDate);
             return bucket;
