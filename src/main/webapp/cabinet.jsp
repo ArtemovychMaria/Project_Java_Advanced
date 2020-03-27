@@ -12,9 +12,15 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-<p>Hey ${sessionScope['userFirstName']}!!!</p>
+<p>All products</p>
+
+<div class="product-card">
+<%--// product--%>
+</div>
+
 <jsp:include page="footer.jsp"></jsp:include>
 
 <script src="js/header.js"></script>
+<script src="js/cabinet.js"></script>
 </body>
 </html>

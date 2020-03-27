@@ -39,7 +39,7 @@ public class EntranceServlet extends HttpServlet {
 
         if (user.isPresent()) {
             HttpSession session = req.getSession(true);
-            session.setAttribute("userFirstName", user.get().getFirstName());
+            session.setAttribute("userId", user.get().getId());
             resp.setStatus(HttpServletResponse.SC_OK);
             return;
         }

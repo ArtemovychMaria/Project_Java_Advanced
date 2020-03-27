@@ -36,7 +36,7 @@ public class ProductService {
         return productDao.selectById(id);
     }
 
-    public List<Product> selectAll(){
+    public List<Product> getAll(){
         return productDao.selectAll();
     }
 

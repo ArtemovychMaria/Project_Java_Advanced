@@ -11,11 +11,11 @@ import org.apache.log4j.Logger;
 public class BucketDao implements CRUD <Bucket>{
     private Connection connection;
     private static final Logger log=Logger.getLogger(BucketDao.class);
-    public static final String select_buckets="select * from buckets";
-    public static final String select_by_id="select * from buckets where id=?";
-    public static final String insert="insert into buckets(user_id,product_id,purchase_date) values(?,?,?)";
-    public static final String delete="delete from buckets where id=?";
-    public static final String update="update buckets set user_id=?,product_id=?,purchase_date=? where id=?";
+    public static final String select_buckets="select * from bucket";
+    public static final String select_by_id="select * from bucket where id=?";
+    public static final String insert="insert into bucket(user_id,product_id,purchase_date) values(?,?,?)";
+    public static final String delete="delete from bucket where id=?";
+    public static final String update="update bucket set user_id=?,product_id=?,purchase_date=? where id=?";
 
     public BucketDao() {
         this.connection = ConnectionUtil.getConnection();;
@@ -63,9 +63,9 @@ public class BucketDao implements CRUD <Bucket>{
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setObject(1,bucket.getUserId());
-        preparedStatement.setObject(2,bucket.getProductId());
-        preparedStatement.setObject(3,bucket.getPurchaseDate());
+        preparedStatement.setInt(1,bucket.getUserId());
+        preparedStatement.setInt(2,bucket.getProductId());
+        preparedStatement.setDate(3,new Date(bucket.getPurchaseDate().getTime()));
 
         preparedStatement.executeUpdate();
         ResultSet generatedKeys = preparedStatement.getGeneratedKeys();

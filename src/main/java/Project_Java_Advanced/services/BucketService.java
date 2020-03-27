@@ -4,27 +4,31 @@ package Project_Java_Advanced.services;
 import Project_Java_Advanced.daos.BucketDao;
 import Project_Java_Advanced.entities.Bucket;
 
+import java.util.Date;
 import java.util.List;
 
 public class BucketService {
 
     private BucketDao bucketDao;
-    private BucketService bucketService;
+    private static BucketService bucketService;
 
-    private BucketService(){
-
-        this.bucketDao=new BucketDao();
+    public BucketService(){
+        bucketDao=new BucketDao();
     }
 
-    public BucketService getBucketService(){
+    public static BucketService getBucketService(){
         if(bucketService==null){
             bucketService=new BucketService();
         }
         return bucketService;
     }
 
-    public Bucket insert(Bucket bucket){
-        return bucketDao.insert(bucket);
+    public Bucket insert(int userId, int productId, Date purchaseDate){
+        return bucketDao.insert(Bucket.builder()
+        .setUserId(userId)
+        .setProductId(productId)
+        .setPurchaseDate(purchaseDate)
+        .build());
     }
 
     public Bucket getByID(int id){

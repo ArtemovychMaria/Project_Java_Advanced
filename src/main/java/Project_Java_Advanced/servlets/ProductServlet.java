@@ -12,49 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet("/product")
+@WebServlet("/products")
 public class ProductServlet extends HttpServlet {
 
     ProductService productService=ProductService.getProductService();
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String price = request.getParameter("price");
-
-        Object userEmail = request.getSession().getAttribute("userEmail");
-
-        Optional<String> errorMessage = getErrorMessage(price);
-        if (errorMessage.isPresent()) {
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write(errorMessage.get());
-
-            return;
-        }
-        productService.insert(name,description,price);
-
-        response.setStatus(HttpServletResponse.SC_OK);
-    }
-
-    private Optional<String> getErrorMessage(String price) {
-        if (Strings.isNullOrEmpty(price)) {
-            return Optional.of("Price can't be empty");
-        }
-        try {
-            double parsedPrice = Double.parseDouble(price);
-            return parsedPrice > 0 ? Optional.empty() : Optional.of("Price can't less then zero");
-        } catch (NumberFormatException e) {
-            return Optional.of("Price should be numeric");
-        }
-    }
 
     // to get resource (product)
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String productId = request.getParameter("id");
+        Product product = productService.getByID(Integer.parseInt(productId));
+        request.setAttribute("productName", product.getName());
+        request.setAttribute("productD", product.getDescription());
+        request.setAttribute("productP", product.getPrice());
+        request.setAttribute("productId", product.getId());
+
+        request.getRequestDispatcher("productInfo.jsp").forward(request, response);
 
     }
 
