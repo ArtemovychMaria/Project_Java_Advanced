@@ -19,7 +19,7 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/AddProduct.jsp">Add product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/bucket.jsp">Bucket</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-md-auto d-md-flex">
