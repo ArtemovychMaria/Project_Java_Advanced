@@ -30,7 +30,7 @@ $("button.register")
                 $.post("register", userRegistration,)
                     .done(function (data, textStatus, xhr) {
                         if (xhr.status === 201) {
-                          window.location = "http://localhost:8888/InternetShop/cabinet.jsp";
+                          window.location = window.origin + "/InternetShop/cabinet";
                         } else {
                             alert("error while creating a user");
                         }
@@ -60,7 +60,7 @@ $("button.login").click(function (event) {
         $.post("login", userLogin)
             .done(function (data, textStatus, xhr) {
                 if (xhr.status === 200) {
-                     window.location = window.origin + "/InternetShop/cabinet.jsp";
+                     window.location = window.origin + "/InternetShop/cabinet";
                 } else {
                     alert("error while authorizing the user");
                 }
