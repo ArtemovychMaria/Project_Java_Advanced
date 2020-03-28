@@ -6,6 +6,7 @@ import Project_Java_Advanced.daos.ProductDao;
 import Project_Java_Advanced.entities.Product;
 
 import java.util.List;
+import java.util.Set;
 
 public class ProductService {
 
@@ -38,6 +39,10 @@ public class ProductService {
 
     public List<Product> getAll(){
         return productDao.selectAll();
+    }
+
+    public List<Product> getByIds(Set<Integer> productIds) {
+        return productDao.getByIds(productIds);
     }
 
     public void update(Product product){

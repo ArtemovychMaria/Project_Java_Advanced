@@ -1,4 +1,4 @@
-package Project_Java_Advanced.servlets;
+package Project_Java_Advanced.servlets.controllers;
 
 import Project_Java_Advanced.entities.Product;
 import Project_Java_Advanced.services.ProductService;

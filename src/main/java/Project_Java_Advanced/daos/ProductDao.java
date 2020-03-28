@@ -6,6 +6,9 @@ import Project_Java_Advanced.entities.Product;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.apache.log4j.Logger;
 
 public class ProductDao implements CRUD<Product> {
@@ -14,6 +17,7 @@ public class ProductDao implements CRUD<Product> {
     private static final Logger log=Logger.getLogger(ProductDao.class);
     public static final String select_products="select * from products";
     public static final String select_by_id="select * from products where id=?";
+    public static final String select_all_id_in="select * from products where id in ";
     public static final String insert="insert into products(product_name,product_description,price) values(?,?,?)";
     public static final String delete="delete from products where id=?";
     public static final String update="update products set product_name=?,product_description=?,price=? where id=?";
@@ -53,6 +57,28 @@ public class ProductDao implements CRUD<Product> {
             e.printStackTrace();
             throw new RuntimeException("Error selecting");
         }
+    }
+
+    public List<Product> getByIds(Set<Integer> productIds) {
+        List<Product> productRecords = new ArrayList<>();
+        try {
+
+            String ids = productIds.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(","));
+
+            String query = String.format("%s (%s)", select_all_id_in, ids);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                productRecords.add(Product.of(result));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return productRecords;
     }
 
     @Override
