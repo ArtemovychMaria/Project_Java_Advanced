@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class BucketController extends HttpServlet {
 
     private BucketService bucketService = BucketService.getBucketService();
-    private ProductService productService=ProductService.getProductService();
+    private ProductService productService = ProductService.getProductService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -67,11 +67,9 @@ public class BucketController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String bucketIdParameter = req.getParameter("bucketId");
-        String userIdParameter = req.getParameter("userId");
+        int bucketId = Integer.parseInt(req.getParameter("bucketId"));
+        int userId = (int) req.getSession().getAttribute("userId");
 
-        int userId = Integer.parseInt(userIdParameter);
-        int bucketId = Integer.parseInt(bucketIdParameter);
 
         Bucket bucket = bucketService.getByID(bucketId);
 

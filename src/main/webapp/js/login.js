@@ -7,6 +7,11 @@ $('.message a').click(function (){
   $("div.register").fadeToggle("fast");
 })
 
+function loginRegisterSwitch() {
+  $("div.register").toggle();
+  $("div.login").fadeToggle("fast");
+}
+
 $("button.register")
     .click(
         function (event) {
@@ -30,7 +35,9 @@ $("button.register")
                 $.post("register", userRegistration,)
                     .done(function (data, textStatus, xhr) {
                         if (xhr.status === 201) {
-                          window.location = window.origin + "/InternetShop/cabinet";
+                         $("form")[0].reset();
+                         $("form")[1].reset();
+                        loginRegisterSwitch();
                         } else {
                             alert("error while creating a user");
                         }
