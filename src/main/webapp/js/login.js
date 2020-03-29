@@ -19,9 +19,13 @@ $("button.register")
             var firstName = $("form.registerForm input.userName").val();
             var lastName = $("form.registerForm input.userSurname").val();
             var email = $("form.registerForm input.registerEmail").val();
+            var atposition=email.indexOf("@");
+            var dotposition=email.lastIndexOf(".");
             var password = $("form.registerForm input.registerPassword").val();
             if (firstName == '' || lastName == '' || email == '' || password == '') {
                 alert("Please fill all fields...!!!!!!");
+            } else if (atposition<1 || dotposition<atposition+2 || dotposition+2>=email.length) {
+                   alert("Please enter valid email");
             } else if ((password.length) < 4) {
                 alert("Password should atleast 4 character in length...!!!!!!");
             } else {
