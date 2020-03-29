@@ -39,6 +39,10 @@ public class BucketService {
         return bucketDao.selectAll();
     }
 
+    public List<Bucket> getAllByUserId(int userId) {
+        return bucketDao.getAllByUserId(userId);
+    }
+
     public void update(Bucket bucket){
 
         bucketDao.update(bucket);

@@ -13,6 +13,7 @@ public class BucketDao implements CRUD <Bucket>{
     private static final Logger log=Logger.getLogger(BucketDao.class);
     public static final String select_buckets="select * from bucket";
     public static final String select_by_id="select * from bucket where id=?";
+    public static final String select_all_by_user_id="select * from bucket where user_id=?";
     public static final String insert="insert into bucket(user_id,product_id,purchase_date) values(?,?,?)";
     public static final String delete="delete from bucket where id=?";
     public static final String update="update bucket set user_id=?,product_id=?,purchase_date=? where id=?";
@@ -33,6 +34,23 @@ public class BucketDao implements CRUD <Bucket>{
             e.printStackTrace();
             throw new RuntimeException("Error");
         }
+    }
+
+    public List<Bucket> getAllByUserId(int userId) {
+
+        List<Bucket> bucketRecords = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(select_all_by_user_id);
+            preparedStatement.setInt(1, userId);
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                bucketRecords.add(Bucket.of(result));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return bucketRecords;
     }
 
     @Override

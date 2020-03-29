@@ -31,8 +31,10 @@ foreign key (product_id) references products(id)
 
 insert into users(user_email,user_name,user_surname,user_role,user_password)
 values
-("Ivanko@mail","Petro","Ivanlov","admin","1217");
+("Ivanko@mail","Petro","Ivanlov","ADMIN","1217");
 
 select * from users;
 select * from products;
 select * from bucket;
+
+
