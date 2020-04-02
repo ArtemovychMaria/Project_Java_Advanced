@@ -1,5 +1,6 @@
 package Project_Java_Advanced.daos;
 
+import Project_Java_Advanced.EntityManagerUtils;
 import Project_Java_Advanced.utils.ConnectionUtil;
 import Project_Java_Advanced.entities.User;
 
@@ -9,19 +10,20 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.log4j.Logger;
 
+import javax.persistence.EntityManager;
+
 public class UserDao implements CRUD <User> {
 
     private Connection connection;
     private static final Logger log=Logger.getLogger(UserDao.class);
     public static final String select_users="select * from users";
     public static final String select_by_id="select * from users where id=?";
-    public static final String select_by_email="select * from users where user_email=?";
+    public static final String select_by_email="select u from User u where u.email = :email ";
     public static final String insert="insert into users(user_email,user_name,user_surname,user_role,user_password) values(?,?,?,?,?)";
     public static final String delete="delete from users where id=?";
     public static final String update="update users set user_email=?,user_name=?,user_surname=?,user_role=?,user_password=? where id=?";
 
     public UserDao() {
-        this.connection = ConnectionUtil.getConnection();;
     }
 
     @Override
@@ -39,17 +41,15 @@ public class UserDao implements CRUD <User> {
 }
 
     public Optional<User> selectByEmail(String email) {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(select_by_email);
-            preparedStatement.setObject(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                return Optional.of(User.of(resultSet));
-            }
-            return Optional.empty();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error while getting user by email= " + email);
-        }
+        EntityManager entityManager=EntityManagerUtils.getEntityManager();
+
+        entityManager.getTransaction().begin();
+        User user= (User) entityManager.createQuery(select_by_email)
+                .setParameter("email",email)
+                .getSingleResult();
+        entityManager.getTransaction().commit();
+
+        return Optional.ofNullable(user);
     }
 
     @Override
@@ -78,24 +78,13 @@ public class UserDao implements CRUD <User> {
                 "password=%s",user.getEmail(),user.getFirstName(),user.getSurname(),user.getPassword());
         log.debug(msg);
         log.info(msg);
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-        fillStatementWithUpdateParameters(preparedStatement,user);
-        preparedStatement.executeUpdate();
-        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
-        generatedKeys.next();
-
-        user.setId(generatedKeys.getInt(1));
+        EntityManager entityManager= EntityManagerUtils.getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(user);
+        entityManager.getTransaction().commit();
 
         return user;
-        } catch (SQLException e) {
-            String message=String.format("Error inserting user with email=%s,firstName=%s,surname=%s and" +
-                    "password=%s",user.getEmail(),user.getFirstName(),user.getSurname(),user.getPassword());
-            log.error(message,e);
-        }
-        return null;
     }
 
     private void fillStatementWithUpdateParameters(PreparedStatement preparedStatement,User user) {

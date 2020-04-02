@@ -71,7 +71,7 @@ $("button.login").click(function (event) {
         $.post("login", userLogin)
             .done(function (data, textStatus, xhr) {
                 if (xhr.status === 200) {
-                     window.location = window.origin + "/InternetShop/cabinet";
+                     window.location = window.origin + "/InternetShop_war/cabinet";
                 } else {
                     alert("error while authorizing the user");
                 }

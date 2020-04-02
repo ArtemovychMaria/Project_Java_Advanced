@@ -10,7 +10,7 @@ $("a.logout").click(function () {
 
     $.get("logout")
         .done(function (data, textStatus, xhr) {
-            window.location = window.origin + "/InternetShop/";
+            window.location = window.origin + "/InternetShop_war/";
         })
         .fail(function () {
             alert("Can't logout");

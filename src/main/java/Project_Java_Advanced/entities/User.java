@@ -1,15 +1,27 @@
 package Project_Java_Advanced.entities;
 
+
+import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
+@Entity
+@Table(name="users")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+    @Column(name = "user_email")
     String email;
+    @Column(name = "user_name")
     String firstName;
+    @Column(name = "user_surname")
     String surname;
+    @Column(name = "user_role")
     String role;
+    @Column(name = "user_password")
     String password;
 
     public User() {

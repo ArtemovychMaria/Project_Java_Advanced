@@ -1,15 +1,25 @@
 package Project_Java_Advanced.entities;
 
+import javax.persistence.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
+@Entity
+@Table(name="products")
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "product_name")
     private String name;
+    @Column(name = "product_description")
     private String description;
     private double price;
+
+    public Product() {
+    }
 
     public static Builder builder() {
         return new Builder();
