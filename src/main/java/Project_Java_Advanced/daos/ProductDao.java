@@ -48,10 +48,15 @@ public class ProductDao implements CRUD<Product> {
 
     @SuppressWarnings("unchecked")
     public List<Product> getByIds(Set<Integer> productIds) {
+        List<Product> productList=new ArrayList<>();
         EntityManager entityManager=EntityManagerUtils.getEntityManager();
-        return entityManager.createQuery(select_all_id_in)
-                .setParameter("productIds",productIds)
-                .getResultList();
+        if(!productIds.isEmpty()) {
+            productList = entityManager.createQuery(select_all_id_in)
+                    .setParameter("productIds", productIds)
+                    .getResultList();
+        }
+
+        return productList;
     }
 
     @Override
