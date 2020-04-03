@@ -1,5 +1,6 @@
 package Project_Java_Advanced.daos;
 
+import Project_Java_Advanced.EntityManagerUtils;
 import Project_Java_Advanced.utils.ConnectionUtil;
 import Project_Java_Advanced.entities.Product;
 
@@ -11,74 +12,51 @@ import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
+import javax.persistence.EntityManager;
+
 public class ProductDao implements CRUD<Product> {
 
     private Connection connection;
     private static final Logger log=Logger.getLogger(ProductDao.class);
-    public static final String select_products="select * from products";
+    public static final String select_products="select p from Product p";
     public static final String select_by_id="select * from products where id=?";
-    public static final String select_all_id_in="select * from products where id in ";
+    public static final String select_all_id_in="select p from Product p where p.id in (:productIds) ";
     public static final String insert="insert into products(product_name,product_description,price) values(?,?,?)";
     public static final String delete="delete from products where id=?";
     public static final String update="update products set product_name=?,product_description=?,price=? where id=?";
 
     public ProductDao() {
-        this.connection = ConnectionUtil.getConnection();
+//        this.connection = ConnectionUtil.getConnection();
     }
 
 
     @Override
     public Product selectById(int id) {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(select_by_id);
-            preparedStatement.setObject(1,id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            return Product.of(resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error");
-        }
+
+        EntityManager entityManager=EntityManagerUtils.getEntityManager();
+        return entityManager.find(Product.class,id);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public List<Product> selectAll() {
-        try {
-            Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(select_products);
+        public List<Product> selectAll() {
+        EntityManager entityManager=EntityManagerUtils.getEntityManager();
 
-        List<Product> products= new ArrayList<>();
-
-        while (resultSet.next()){
-            products.add(Product.of(resultSet));
-        }
-        return products;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error selecting");
-        }
+        return entityManager.createQuery(select_products)
+                .getResultList();
     }
 
+    @SuppressWarnings("unchecked")
     public List<Product> getByIds(Set<Integer> productIds) {
-        List<Product> productRecords = new ArrayList<>();
-        try {
-
-            String ids = productIds.stream()
-                    .map(String::valueOf)
-                    .collect(Collectors.joining(","));
-
-            String query = String.format("%s (%s)", select_all_id_in, ids);
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-            ResultSet result = preparedStatement.executeQuery();
-            while (result.next()) {
-                productRecords.add(Product.of(result));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        List<Product> productList=new ArrayList<>();
+        EntityManager entityManager=EntityManagerUtils.getEntityManager();
+        if(!productIds.isEmpty()) {
+            productList = entityManager.createQuery(select_all_id_in)
+                    .setParameter("productIds", productIds)
+                    .getResultList();
         }
 
-        return productRecords;
+        return productList;
     }
 
     @Override
@@ -88,24 +66,12 @@ public class ProductDao implements CRUD<Product> {
                 "price=%f",product.getName(),product.getDescription(),product.getPrice());
         log.debug(msg);
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setObject(1,product.getName());
-        preparedStatement.setObject(2,product.getDescription());
-        preparedStatement.setObject(3,product.getPrice());
-
-        preparedStatement.executeUpdate();
-            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-
-        generatedKeys.next();
-
-        product.setId(generatedKeys.getInt(1));
+        EntityManager entityManager= EntityManagerUtils.getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(product);
+        entityManager.getTransaction().commit();
 
         return product;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error insering");
-        }
     }
 
     @Override
