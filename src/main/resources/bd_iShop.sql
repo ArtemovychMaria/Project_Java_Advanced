@@ -20,7 +20,7 @@ product_description text,
 price decimal(6,3) not null
 );
 
-create table bucket(
+create table buckets(
 id int not null primary key auto_increment,
 user_id int not null,
 product_id int not null,
@@ -35,6 +35,6 @@ values
 
 select * from users;
 select * from products;
-select * from bucket;
+select * from buckets;
 
 
